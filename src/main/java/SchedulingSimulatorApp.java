@@ -1,8 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class SchedulingSimulatorApp extends JFrame {
+
+    public static final int APPLICATION_HEIGHT = 700;
+    public static final int APPLICATION_WIDTH = 1000;
+
     private static final String APPLICATION_TITLE = "Scheduling Simulator App";
 
     private JRadioButton task1Enable;
@@ -19,7 +24,7 @@ public class SchedulingSimulatorApp extends JFrame {
     private JTextField task2ReleaseTime;
     private JTextField task2ExecutionTime;
 
-    private SimulationController controller;
+    private final SimulationController controller;
 
     public SchedulingSimulatorApp() {
         super(APPLICATION_TITLE);
@@ -31,7 +36,7 @@ public class SchedulingSimulatorApp extends JFrame {
     private void init() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
-        this.setPreferredSize(new Dimension(1000, 700));
+        this.setPreferredSize(new Dimension(APPLICATION_WIDTH, APPLICATION_HEIGHT));
         this.setResizable(false);
         this.pack();
     }
@@ -49,7 +54,7 @@ public class SchedulingSimulatorApp extends JFrame {
     }
 
     private void btnSimulateActionPerformed(ActionEvent e) {
-        controller.simulate(task1ReleaseTime.getText());
+        controller.simulate(setupAndGetEnabledTasks());
     }
 
     // ToDo: Address why this logic isn't working properly, however, this is low-priority.
@@ -74,5 +79,37 @@ public class SchedulingSimulatorApp extends JFrame {
             default:
                 // do nothing for now
         }
+    }
+
+    private ArrayList<Task> setupAndGetEnabledTasks() {
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        if (task1Enable.isSelected()) {
+            Task task = new Task();
+
+            // ToDo: Implement these setters with restrictions on the fields set properly
+
+            task.setDeadline(1D);
+            task.setExecutionTime(1D);
+            task.setPeriod(1D);
+            task.setReleaseTime(1D);
+            tasks.add(task);
+        }
+
+        if (task2Enable.isSelected()) {
+            Task task = new Task();
+
+            // ToDo: Implement these setters with restrictions on the fields set properly
+
+            task.setDeadline(2D);
+            task.setExecutionTime(2D);
+            task.setPeriod(2D);
+            task.setReleaseTime(2D);
+            tasks.add(task);
+        }
+
+        // ToDo: Add logic for a 3rd task (or more depending on final decisions)
+
+        return tasks;
     }
 }
