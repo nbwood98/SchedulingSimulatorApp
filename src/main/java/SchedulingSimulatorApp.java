@@ -31,6 +31,7 @@ public class SchedulingSimulatorApp extends JFrame {
     private JTextField task3Period;
     private JTextField task3Invocation1;
     private JTextField task3Invocation2;
+    private JButton checkSchedulability;
 
 
     private final SimulationController controller;
