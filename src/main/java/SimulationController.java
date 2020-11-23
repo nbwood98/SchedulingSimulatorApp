@@ -54,7 +54,7 @@ public class SimulationController {
     private XYDataset createDataset() {
         DefaultXYDataset ds = new DefaultXYDataset();
         double[][] data = {{0.0, 2.68, 2.68, 8.0, 8.0, 9.83, 9.83}, {.746, .746, 0.0, 0.0, .546, .546, 0.0}};
-        double[][] data2 = {{0.2, 0.3, 0.4}, {1, 2, 3}};
+        double[][] data2 = {{2.68, 0.3, 0.4}, {1, 2, 3}};
         double[][] data3 = {{0.3, 0.4, 0.5}, {1, 2, 3}};
 
         double[][] data4 = new double[100][100];
