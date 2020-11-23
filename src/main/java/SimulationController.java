@@ -35,15 +35,22 @@ public class SimulationController {
     }
 
     private JFreeChart getChart() {
+
+        // ToDo: Need a way to set bounds on the chart, dependent on max time and start at 0
+
         XYDataset ds = createDataset();
-        return ChartFactory.createXYLineChart("Test Simulation Chart", "x", "y", ds,
+        return ChartFactory.createXYLineChart("Test Simulation Chart", "Time", "Frequency", ds,
                 PlotOrientation.VERTICAL, true, true, false);
     }
 
     private XYDataset createDataset() {
         DefaultXYDataset ds = new DefaultXYDataset();
         double[][] data = {{0.1, 0.2, 0.3}, {1, 2, 3}};
-        ds.addSeries("series1", data);
+        double[][] data2 = {{0.2, 0.3, 0.4}, {1, 2, 3}};
+        double[][] data3 = {{0.3, 0.4, 0.5}, {1, 2, 3}};
+        ds.addSeries("Task 1", data);
+        ds.addSeries("Task 2", data2);
+        ds.addSeries("Task 3", data3);
         return ds;
     }
 }
