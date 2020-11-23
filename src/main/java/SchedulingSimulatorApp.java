@@ -17,14 +17,21 @@ public class SchedulingSimulatorApp extends JFrame {
     private JRadioButton task1Enable;
     private JTextField task1Period;
     private JTextField task1WorstCase;
+    private JTextField task1Invocation1;
+    private JTextField task1Invocation2;
 
     private JRadioButton task2Enable;
     private JTextField task2Period;
     private JTextField task2WorstCase;
+    private JTextField task2Invocation1;
+    private JTextField task2Invocation2;
 
     private JRadioButton task3Enable;
     private JTextField task3WorstCase;
     private JTextField task3Period;
+    private JTextField task3Invocation1;
+    private JTextField task3Invocation2;
+
 
     private final SimulationController controller;
 
@@ -82,23 +89,61 @@ public class SchedulingSimulatorApp extends JFrame {
     private ArrayList<Task> setupAndGetEnabledTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
 
+        task1Enable.setSelected(true);
         if (task1Enable.isSelected()) {
             Task task = new Task(1);
 
             // ToDo: Implement these setters with restrictions on the fields set properly
 
-            task.setWorstCaseComputationTime(1D);
-            task.setPeriod(1D);
+            /*task.setWorstCaseComputationTime(Integer.parseInt(task1WorstCase.getText()));
+            task.setPeriod(Integer.parseInt(task1Period.getText()));
+            task.setInvocation1(Integer.parseInt(task1Invocation1.getText()));
+            task.setInvocation2(Integer.parseInt(task1Invocation2.getText()));*/
+
+
+            // For Testing Purposes
+            task.setWorstCaseComputationTime(3);
+            task.setPeriod(8);
+            task.setInvocation1(2);
+            task.setInvocation2(1);
             tasks.add(task);
         }
 
+        task2Enable.setSelected(true);
         if (task2Enable.isSelected()) {
             Task task = new Task(2);
 
             // ToDo: Implement these setters with restrictions on the fields set properly
 
-            task.setWorstCaseComputationTime(2D);
-            task.setPeriod(2D);
+            /*task.setWorstCaseComputationTime(Integer.parseInt(task2WorstCase.getText()));
+            task.setPeriod(Integer.parseInt(task2Period.getText()));
+            task.setInvocation1(Integer.parseInt(task2Invocation1.getText()));
+            task.setInvocation2(Integer.parseInt(task2Invocation2.getText()));*/
+
+            // For Testing Purposes
+            task.setWorstCaseComputationTime(3);
+            task.setPeriod(10);
+            task.setInvocation1(1);
+            task.setInvocation2(1);
+            tasks.add(task);
+        }
+
+        task3Enable.setSelected(true);
+        if (task3Enable.isSelected()) {
+            Task task = new Task(3);
+
+            // ToDo: Implement these setters with restrictions on the fields set properly
+
+            /*task.setWorstCaseComputationTime(Integer.parseInt(task3WorstCase.getText()));
+            task.setPeriod(Integer.parseInt(task3Period.getText()));
+            task.setInvocation1(Integer.parseInt(task3Invocation1.getText()));
+            task.setInvocation2(Integer.parseInt(task3Invocation2.getText()));*/
+
+            // For Testing Purposes
+            task.setWorstCaseComputationTime(1);
+            task.setPeriod(14);
+            task.setInvocation1(1);
+            task.setInvocation2(1);
             tasks.add(task);
         }
 
