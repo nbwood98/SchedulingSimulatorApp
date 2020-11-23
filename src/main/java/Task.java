@@ -2,25 +2,25 @@ import java.io.Serializable;
 
 public class Task implements Serializable {
 
-    private double executionTime;
-    private double releaseTime;
+    private final int taskNumber;
+
+    private double worstCaseComputationTime;
     private double period;
-    private double deadline;
 
-    public void setExecutionTime(double executionTime) {
-        this.executionTime = executionTime;
+    public Task(int taskNumber) {
+        this.taskNumber = taskNumber;
     }
 
-    public double getExecutionTime() {
-        return executionTime;
+    public int getTaskNumber() {
+        return taskNumber;
     }
 
-    public void setReleaseTime(double releaseTime) {
-        this.releaseTime = releaseTime;
+    public void setWorstCaseComputationTime(double worstCaseComputationTime) {
+        this.worstCaseComputationTime = worstCaseComputationTime;
     }
 
-    public double getReleaseTime() {
-        return releaseTime;
+    public double getWorstCaseComputationTime() {
+        return worstCaseComputationTime;
     }
 
     public void setPeriod(double period) {
@@ -29,14 +29,6 @@ public class Task implements Serializable {
 
     public double getPeriod() {
         return period;
-    }
-
-    public void setDeadline(double deadline) {
-        this.deadline = deadline;
-    }
-
-    public double getDeadline() {
-        return deadline;
     }
 
     // ToDo: Implement equals and hash code methods if they are required for equality

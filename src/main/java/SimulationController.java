@@ -19,7 +19,7 @@ public class SimulationController {
 
     public void simulate(ArrayList<Task> tasks) {
         for (Task enabledTask : tasks) {
-            System.out.println(enabledTask.getDeadline());
+            System.out.println(enabledTask.getWorstCaseComputationTime());
         }
         showChart(getChart());
     }

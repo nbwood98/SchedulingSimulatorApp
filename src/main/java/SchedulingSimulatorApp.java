@@ -10,19 +10,21 @@ public class SchedulingSimulatorApp extends JFrame {
 
     private static final String APPLICATION_TITLE = "Scheduling Simulator App";
 
-    private JRadioButton task1Enable;
-    private JTextField task1ExecutionTime;
-    private JTextField task1Period;
-    private JTextField task1Deadline;
-    private JTextField task1ReleaseTime;
     private JPanel mainPanel;
     private JButton btnSimulate;
     private JLabel label1;
+
+    private JRadioButton task1Enable;
+    private JTextField task1Period;
+    private JTextField task1WorstCase;
+
     private JRadioButton task2Enable;
     private JTextField task2Period;
-    private JTextField task2Deadline;
-    private JTextField task2ReleaseTime;
-    private JTextField task2ExecutionTime;
+    private JTextField task2WorstCase;
+
+    private JRadioButton task3Enable;
+    private JTextField task3WorstCase;
+    private JTextField task3Period;
 
     private final SimulationController controller;
 
@@ -65,16 +67,12 @@ public class SchedulingSimulatorApp extends JFrame {
             case 1:
                 enabled = task1Enable.isEnabled();
                 task1Period.setEditable(enabled);
-                task1Deadline.setEditable(enabled);
-                task1ExecutionTime.setEditable(enabled);
-                task1ReleaseTime.setEditable(enabled);
+                task1WorstCase.setEditable(enabled);
                 break;
             case 2:
                 enabled = task2Enable.isEnabled();
                 task2Period.setEditable(enabled);
-                task2Deadline.setEditable(enabled);
-                task2ExecutionTime.setEditable(enabled);
-                task2ReleaseTime.setEditable(enabled);
+                task2WorstCase.setEditable(enabled);
                 break;
             default:
                 // do nothing for now
@@ -85,26 +83,22 @@ public class SchedulingSimulatorApp extends JFrame {
         ArrayList<Task> tasks = new ArrayList<>();
 
         if (task1Enable.isSelected()) {
-            Task task = new Task();
+            Task task = new Task(1);
 
             // ToDo: Implement these setters with restrictions on the fields set properly
 
-            task.setDeadline(1D);
-            task.setExecutionTime(1D);
+            task.setWorstCaseComputationTime(1D);
             task.setPeriod(1D);
-            task.setReleaseTime(1D);
             tasks.add(task);
         }
 
         if (task2Enable.isSelected()) {
-            Task task = new Task();
+            Task task = new Task(2);
 
             // ToDo: Implement these setters with restrictions on the fields set properly
 
-            task.setDeadline(2D);
-            task.setExecutionTime(2D);
+            task.setWorstCaseComputationTime(2D);
             task.setPeriod(2D);
-            task.setReleaseTime(2D);
             tasks.add(task);
         }
 
