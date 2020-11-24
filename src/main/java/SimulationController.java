@@ -33,6 +33,7 @@ public class SimulationController {
     }
 
     private void showChart(JFreeChart chart) {
+        // to do: if missed dead line, we need to show a warning
         JFrame chartFrame = new JFrame(CHART_TITLE);
         JPanel chartPanel = new ChartPanel(chart);
         chartFrame.setContentPane(chartPanel);
