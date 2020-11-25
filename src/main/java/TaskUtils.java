@@ -5,6 +5,7 @@ public class TaskUtils {
     // maybe we can use the variable name to do the calc
     public static double calculateUtilization(ArrayList<Task> tasks, int iteration) {
         double sum = 0;
+        double currntTime = 0;
 
         switch (iteration) {
             case 1:
@@ -21,7 +22,7 @@ public class TaskUtils {
             default:
 
         }
-
+    public     
 
         return sum;
     }
