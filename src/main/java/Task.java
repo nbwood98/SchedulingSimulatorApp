@@ -8,6 +8,7 @@ public class Task implements Serializable {
     private int period;
     private int invocation1;
     private int invocation2;
+    private int releaseTime;
 
     public Task(int taskNumber) {
         this.taskNumber = taskNumber;
@@ -47,6 +48,14 @@ public class Task implements Serializable {
 
     public int getInvocation2() {
         return invocation2;
+    }
+
+    public void setReleaseTime(int releaseTime) {
+        this.releaseTime = releaseTime;
+    }
+
+    public int getReleaseTime() {
+        return releaseTime;
     }
 
     // ToDo: Implement equals and hash code methods if they are required for equality

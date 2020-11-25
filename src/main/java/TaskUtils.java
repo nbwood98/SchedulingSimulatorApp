@@ -1,29 +1,33 @@
 import java.util.ArrayList;
 
 public class TaskUtils {
-    // calc ulti should output 6 different u, if task completed then use the actual time, if not use the worst time
-    // maybe we can use the variable name to do the calc
-    public static double calculateUtilization(ArrayList<Task> tasks, int iteration) {
+
+    private static double[] periods;
+
+    public static double calculateUtilization(double time1, double time2, double time3, boolean withRounding) {
         double sum = 0;
+        sum += (time1 / periods[0]) + (time2 / periods[1]) + (time3 / periods[2]);
 
-        switch (iteration) {
-            case 1:
-                for (Task task : tasks) {
-                    if (task != null) {
-                        sum += (task.getWorstCaseComputationTime() / task.getPeriod());
-                    }
-                }
-
-            case 2:
-
-            case 3:
-
-            default:
-
+        if (sum > 1) {
+            // throw new UtilizationExceeds1Exception('Message Error);
+            System.out.println("Utilization exceeds 1");
         }
-
-
+        if (withRounding) {
+            if (sum <= 0.5) {
+                return 0.5;
+            } else if (sum <= 0.75) {
+                return 0.75;
+            }
+            return 1;
+        }
         return sum;
+    }
+
+    public static void setPeriodsForTasks(ArrayList<Task> tasks) {
+        periods = new double[3];
+        for (int i = 0; i < 3; i++) {
+            periods[i] = tasks.get(i).getPeriod();
+        }
     }
 
 }

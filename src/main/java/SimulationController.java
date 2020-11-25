@@ -8,6 +8,8 @@ import org.jfree.data.xy.XYDataset;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SimulationController {
 
@@ -18,16 +20,91 @@ public class SimulationController {
     }
 
     public void simulate(ArrayList<Task> tasks) {
+        // ToDo: Need logic to setup ordering of tasks based on EDF
+        // ToDo: Refactoring to accomodate release times (will need to be evaluated at every task)
 
-        double utilization = TaskUtils.calculateUtilization(tasks, 0);
-        double task1TimeAtCompletion = tasks.get(0).getInvocation1() / utilization;
-        double task2TimeAtCompletion = (tasks.get(1).getInvocation1() / utilization) + task1TimeAtCompletion;
-        double task3TimeAtCompletion = (tasks.get(2).getInvocation1() / utilization) + task2TimeAtCompletion;
+        Map<Integer, Integer> taskNumbertoOrderMap = new HashMap<>();
 
-        System.out.println("Utilization: " + utilization);
-        System.out.println("Task 1 Time at Completion: " + task1TimeAtCompletion);
-        System.out.println("Task 2 Time at Completion: " + task2TimeAtCompletion);
-        System.out.println("Task 3 Time at Completion: " + task3TimeAtCompletion);
+        TaskUtils.setPeriodsForTasks(tasks);
+        Task task1 = tasks.get(0);
+        Task task2 = tasks.get(1);
+        Task task3 = tasks.get(2);
+
+        /*
+         * Invocation 1
+         */
+        double currentTime = 0;
+        ArrayList<Double> utilizations = new ArrayList<>();
+
+        // Task 1
+        double utilization = TaskUtils.calculateUtilization(task1.getWorstCaseComputationTime(),
+                task2.getWorstCaseComputationTime(),
+                task3.getWorstCaseComputationTime(),
+                false);
+        currentTime += task1.getInvocation1() / utilization;
+        utilizations.add(utilization);
+        System.out.println("Utilization for Task 1: " + utilization);
+        System.out.println("Current Time After Task 1: " + currentTime);
+
+        // Task 2
+        utilization = TaskUtils.calculateUtilization(task1.getInvocation1(),
+                task2.getWorstCaseComputationTime(),
+                task3.getWorstCaseComputationTime(),
+                false);
+        currentTime += task2.getInvocation1() / utilization;
+        utilizations.add(utilization);
+        System.out.println("Utilization for Task 2: " + utilization);
+        System.out.println("Current Time After Task 2: " + currentTime);
+
+        // Task 3
+        utilization = TaskUtils.calculateUtilization(task1.getInvocation1(),
+                task2.getInvocation1(),
+                task3.getWorstCaseComputationTime(),
+                false);
+        currentTime += task3.getInvocation1() / utilization;
+        utilizations.add(utilization);
+        System.out.println("Utilization for Task 3: " + utilization);
+        System.out.println("Current Time After Task 3: " + currentTime);
+
+        if (currentTime < (task1.getPeriod() + task1.getReleaseTime())) {
+            currentTime = task1.getPeriod() + task1.getReleaseTime();
+        }
+
+        /*
+         * Invocation 2
+         */
+
+        // ToDo: Finish implementing these numbers properly
+
+        // Task 1
+        utilization = TaskUtils.calculateUtilization(task1.getInvocation1(),
+                task2.getWorstCaseComputationTime(),
+                task3.getWorstCaseComputationTime(),
+                false);
+        currentTime += task2.getInvocation1() / utilization;
+        utilizations.add(utilization);
+        System.out.println("Utilization for Task 1: " + utilization);
+        System.out.println("Current Time After Task 1: " + currentTime);
+
+        // Task 2
+        utilization = TaskUtils.calculateUtilization(task1.getInvocation1(),
+                task2.getInvocation1(),
+                task3.getWorstCaseComputationTime(),
+                false);
+        currentTime += task3.getInvocation1() / utilization;
+        utilizations.add(utilization);
+        System.out.println("Utilization for Task 2: " + utilization);
+        System.out.println("Current Time After Task 2: " + currentTime);
+
+        // Task 3
+        utilization = TaskUtils.calculateUtilization(task1.getInvocation1(),
+                task2.getInvocation1(),
+                task3.getWorstCaseComputationTime(),
+                false);
+        currentTime += task3.getInvocation1() / utilization;
+        utilizations.add(utilization);
+        System.out.println("Utilization for Task 3: " + utilization);
+        System.out.println("Current Time After Task 3: " + currentTime);
 
         showChart(getChart());
     }

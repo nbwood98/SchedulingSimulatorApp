@@ -32,6 +32,9 @@ public class SchedulingSimulatorApp extends JFrame {
     private JTextField task3Invocation1;
     private JTextField task3Invocation2;
     private JButton checkSchedulability;
+    private JTextField task1ReleaseTime;
+    private JTextField task2ReleaseTime;
+    private JTextField task3ReleaseTime;
 
 
     private final SimulationController controller;
@@ -107,6 +110,7 @@ public class SchedulingSimulatorApp extends JFrame {
             task.setPeriod(8);
             task.setInvocation1(2);
             task.setInvocation2(1);
+            task.setReleaseTime(0);
             tasks.add(task);
         }
 
@@ -126,6 +130,7 @@ public class SchedulingSimulatorApp extends JFrame {
             task.setPeriod(10);
             task.setInvocation1(1);
             task.setInvocation2(1);
+            task.setReleaseTime(0);
             tasks.add(task);
         }
 
@@ -145,6 +150,7 @@ public class SchedulingSimulatorApp extends JFrame {
             task.setPeriod(14);
             task.setInvocation1(1);
             task.setInvocation2(1);
+            task.setReleaseTime(0);
             tasks.add(task);
         }
 
