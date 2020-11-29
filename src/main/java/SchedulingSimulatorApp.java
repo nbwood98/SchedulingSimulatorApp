@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class SchedulingSimulatorApp extends JFrame {
@@ -98,7 +97,7 @@ public class SchedulingSimulatorApp extends JFrame {
     private void btnSimulateActionPerformed(ActionEvent e) {
         try {
             controller.simulate(setupAndGetEnabledTasks());
-        } catch (InvalidInputException ex) {
+        } catch (InvalidInputException | TaskNotSchedulableException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
         }
     }
