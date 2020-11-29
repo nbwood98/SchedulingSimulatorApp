@@ -20,7 +20,7 @@ public class SimulationController {
 
     public void simulate(ArrayList<Task> tasks) throws TaskNotSchedulableException {
         // ToDo: Need logic to setup ordering of tasks based on EDF
-        // ToDo: Refactoring to accomodate release times (will need to be evaluated at every task)
+        // ToDo: Refactoring to accommodate release times (will need to be evaluated at every task)
 
         ArrayList<Task> EDFSortedTasks = TaskUtils.getEDFOrderedTasks(tasks);
         TaskUtils.setPeriodsForTasks(EDFSortedTasks);
