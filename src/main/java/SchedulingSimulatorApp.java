@@ -140,7 +140,6 @@ public class SchedulingSimulatorApp extends JFrame {
                 task.setInvocation1(Integer.parseInt(task1Invocation1.getText()));
                 task.setInvocation2(Integer.parseInt(task1Invocation2.getText()));
 
-
                 // For Testing Purposes
                 task.setWorstCaseComputationTime(3);
                 task.setPeriod(8);

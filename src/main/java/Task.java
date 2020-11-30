@@ -10,8 +10,11 @@ public class Task implements Serializable {
     private int invocation2;
     private int releaseTime;
 
+    private int executionCount;
+
     public Task(int taskNumber) {
         this.taskNumber = taskNumber;
+        executionCount = 0;
     }
 
     public int getTaskNumber() {
@@ -56,6 +59,18 @@ public class Task implements Serializable {
 
     public int getReleaseTime() {
         return releaseTime;
+    }
+
+    public int getExecutionCount() {
+        return executionCount;
+    }
+
+    public void setExecutionCount(int executionCount) {
+        this.executionCount = executionCount;
+    }
+
+    public void incrementExecutionCount() {
+        executionCount++;
     }
 
     // ToDo: Implement equals and hash code methods if they are required for equality

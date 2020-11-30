@@ -5,6 +5,7 @@ import java.util.Map;
 public class TaskUtils {
 
     private static double[] periods;
+    private static boolean withRounding = false;
 
     public static double calculateUtilization(double time1, double time2, double time3, boolean withRounding) throws TaskNotSchedulableException {
         double sum = 0;
@@ -22,6 +23,36 @@ public class TaskUtils {
             return 1;
         }
         return sum;
+    }
+
+    public static double calculateUtilization(ArrayList<Task> tasks, Task executingTask) throws TaskNotSchedulableException {
+        double sum = 0;
+        // ToDo: Implement a list or map mapping (if time permitting) to make this scalable.
+        for (Task task : tasks) {
+            if (task == executingTask || task.getExecutionCount() == 0) {
+                sum += task.getWorstCaseComputationTime() / task.getPeriod();
+            } else if (task.getExecutionCount() == 1) {
+                sum += task.getInvocation1() / task.getPeriod();
+            } else if (task.getExecutionCount() == 2) {
+                sum += task.getInvocation2() / task.getPeriod();
+            }
+        }
+        if (sum > 1) {
+            throw new TaskNotSchedulableException("Task not schedulable. Utilization exceeds 1.");
+        }
+        if (withRounding) {
+            if (sum <= 0.5) {
+                return 0.5;
+            } else if (sum <= 0.75) {
+                return 0.75;
+            }
+            return 1;
+        }
+        return sum;
+    }
+
+    public static void setWithRounding(boolean rounding) {
+        withRounding = rounding;
     }
 
     public static void setPeriodsForTasks(ArrayList<Task> tasks) {
