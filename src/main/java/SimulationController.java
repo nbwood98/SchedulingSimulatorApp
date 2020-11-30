@@ -8,7 +8,6 @@ import org.jfree.data.xy.XYDataset;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class SimulationController {
@@ -19,16 +18,17 @@ public class SimulationController {
 
     }
 
-    public void simulate(ArrayList<Task> tasks) {
+    public void simulate(ArrayList<Task> tasks) throws TaskNotSchedulableException {
         // ToDo: Need logic to setup ordering of tasks based on EDF
-        // ToDo: Refactoring to accomodate release times (will need to be evaluated at every task)
+        // ToDo: Refactoring to accommodate release times (will need to be evaluated at every task)
 
-        Map<Integer, Integer> taskNumbertoOrderMap = new HashMap<>();
+        ArrayList<Task> EDFSortedTasks = TaskUtils.getEDFOrderedTasks(tasks);
+        TaskUtils.setPeriodsForTasks(EDFSortedTasks);
+        Map<Integer, Integer> taskNumbertoOrderMap = TaskUtils.getEDFToInputTaskMapping(EDFSortedTasks, tasks);
 
-        TaskUtils.setPeriodsForTasks(tasks);
-        Task task1 = tasks.get(0);
-        Task task2 = tasks.get(1);
-        Task task3 = tasks.get(2);
+        Task task1 = EDFSortedTasks.get(0);
+        Task task2 = EDFSortedTasks.get(1);
+        Task task3 = EDFSortedTasks.get(2);
 
         /*
          * Invocation 1
@@ -125,7 +125,7 @@ public class SimulationController {
         // ToDo: Need a way to set bounds on the chart, dependent on max time and start at 0
 
         XYDataset ds = createDataset();
-        return ChartFactory.createXYLineChart("Test Simulation Chart", "Time", "Frequency", ds,
+        return ChartFactory.createXYLineChart("Task Simulation Output Graph", "Time", "Frequency", ds,
                 PlotOrientation.VERTICAL, true, true, false);
     }
 
@@ -135,8 +135,6 @@ public class SimulationController {
         double[][] data2 = {{0.0, 2.68, 2.68, 4.29, 4.29, 10, 10, 12.016, 12.015}, {0.0, 0.0, 0.621, 0.621, 0, 0, 0.496,  0.496, 0}};
         double[][] data3 = {{0.0, 4.29, 4.29, 6.66, 6.66, 14, 14, 17.37, 17.37},
                             {0.0, 0.0, 0.421, 0.421, 0.0, 0.0, 0.296, 0.296, 0.0}};
-
-        double[][] data4 = new double[100][100];
 
         ds.addSeries("Task 1", data);
         ds.addSeries("Task 2", data2);

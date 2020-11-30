@@ -12,6 +12,7 @@ public class SchedulingSimulatorApp extends JFrame {
 
     private JPanel mainPanel;
     private JButton btnSimulate;
+    private JButton btnCheckSchedulability;
     private JLabel label1;
 
     private JRadioButton task1Enable;
@@ -31,7 +32,6 @@ public class SchedulingSimulatorApp extends JFrame {
     private JTextField task3Period;
     private JTextField task3Invocation1;
     private JTextField task3Invocation2;
-    private JButton checkSchedulability;
     private JTextField task1ReleaseTime;
     private JTextField task2ReleaseTime;
     private JTextField task3ReleaseTime;
@@ -55,10 +55,38 @@ public class SchedulingSimulatorApp extends JFrame {
     }
 
     private void initComponents() {
+        // Set default state
+        task1Enable.setSelected(true);
+        task2Enable.setSelected(true);
+        task3Enable.setSelected(true);
+
+        populateTaskZeroes();
+
         //Intended for action listener and other related initializations
         task1Enable.addActionListener(this::taskEnable);
         task2Enable.addActionListener(this::taskEnable);
+        task3Enable.addActionListener(this::taskEnable);
         btnSimulate.addActionListener(this::btnSimulateActionPerformed);
+        btnCheckSchedulability.addActionListener(this::btnCheckSchedulabilityActionPerformed);
+    }
+
+    private void populateTaskZeroes() {
+        final String ZERO_STRING = "0";
+        task1ReleaseTime.setText(ZERO_STRING);
+        task1WorstCase.setText(ZERO_STRING);
+        task1Period.setText((ZERO_STRING));
+        task1Invocation1.setText(ZERO_STRING);
+        task1Invocation2.setText(ZERO_STRING);
+        task2ReleaseTime.setText(ZERO_STRING);
+        task2WorstCase.setText(ZERO_STRING);
+        task2Period.setText((ZERO_STRING));
+        task2Invocation1.setText(ZERO_STRING);
+        task2Invocation2.setText(ZERO_STRING);
+        task3ReleaseTime.setText(ZERO_STRING);
+        task3WorstCase.setText(ZERO_STRING);
+        task3Period.setText((ZERO_STRING));
+        task3Invocation1.setText(ZERO_STRING);
+        task3Invocation2.setText(ZERO_STRING);
     }
 
     private void taskEnable(ActionEvent e) {
@@ -67,11 +95,18 @@ public class SchedulingSimulatorApp extends JFrame {
     }
 
     private void btnSimulateActionPerformed(ActionEvent e) {
-        controller.simulate(setupAndGetEnabledTasks());
+        try {
+            controller.simulate(setupAndGetEnabledTasks());
+        } catch (InvalidInputException | TaskNotSchedulableException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void btnCheckSchedulabilityActionPerformed(ActionEvent e) {
+        // ToDo: Implement functionality for validating schedulability
     }
 
     // ToDo: Address why this logic isn't working properly, however, this is low-priority.
-
     private void checkEnabledTasks(int task) {
         boolean enabled;
         switch (task) {
@@ -90,71 +125,73 @@ public class SchedulingSimulatorApp extends JFrame {
         }
     }
 
-    private ArrayList<Task> setupAndGetEnabledTasks() {
+    private ArrayList<Task> setupAndGetEnabledTasks() throws InvalidInputException {
         ArrayList<Task> tasks = new ArrayList<>();
 
-        task1Enable.setSelected(true);
-        if (task1Enable.isSelected()) {
-            Task task = new Task(1);
+        try {
+            task1Enable.setSelected(true);
+            if (task1Enable.isSelected()) {
+                Task task = new Task(1);
 
-            // ToDo: Implement these setters with restrictions on the fields set properly
+                // ToDo: Implement these setters with restrictions on the fields set properly
 
-            /*task.setWorstCaseComputationTime(Integer.parseInt(task1WorstCase.getText()));
-            task.setPeriod(Integer.parseInt(task1Period.getText()));
-            task.setInvocation1(Integer.parseInt(task1Invocation1.getText()));
-            task.setInvocation2(Integer.parseInt(task1Invocation2.getText()));*/
+                task.setWorstCaseComputationTime(Integer.parseInt(task1WorstCase.getText()));
+                task.setPeriod(Integer.parseInt(task1Period.getText()));
+                task.setInvocation1(Integer.parseInt(task1Invocation1.getText()));
+                task.setInvocation2(Integer.parseInt(task1Invocation2.getText()));
 
 
-            // For Testing Purposes
-            task.setWorstCaseComputationTime(3);
-            task.setPeriod(8);
-            task.setInvocation1(2);
-            task.setInvocation2(1);
-            task.setReleaseTime(0);
-            tasks.add(task);
-        }
+                // For Testing Purposes
+                task.setWorstCaseComputationTime(3);
+                task.setPeriod(8);
+                task.setInvocation1(2);
+                task.setInvocation2(1);
+                task.setReleaseTime(0);
+                tasks.add(task);
+            }
 
-        task2Enable.setSelected(true);
-        if (task2Enable.isSelected()) {
-            Task task = new Task(2);
+            task2Enable.setSelected(true);
+            if (task2Enable.isSelected()) {
+                Task task = new Task(2);
 
-            // ToDo: Implement these setters with restrictions on the fields set properly
+                // ToDo: Implement these setters with restrictions on the fields set properly
 
             /*task.setWorstCaseComputationTime(Integer.parseInt(task2WorstCase.getText()));
             task.setPeriod(Integer.parseInt(task2Period.getText()));
             task.setInvocation1(Integer.parseInt(task2Invocation1.getText()));
             task.setInvocation2(Integer.parseInt(task2Invocation2.getText()));*/
 
-            // For Testing Purposes
-            task.setWorstCaseComputationTime(3);
-            task.setPeriod(10);
-            task.setInvocation1(1);
-            task.setInvocation2(1);
-            task.setReleaseTime(0);
-            tasks.add(task);
-        }
+                // For Testing Purposes
+                task.setWorstCaseComputationTime(3);
+                task.setPeriod(10);
+                task.setInvocation1(1);
+                task.setInvocation2(1);
+                task.setReleaseTime(0);
+                tasks.add(task);
+            }
 
-        task3Enable.setSelected(true);
-        if (task3Enable.isSelected()) {
-            Task task = new Task(3);
+            task3Enable.setSelected(true);
+            if (task3Enable.isSelected()) {
+                Task task = new Task(3);
 
-            // ToDo: Implement these setters with restrictions on the fields set properly
+                // ToDo: Implement these setters with restrictions on the fields set properly
 
             /*task.setWorstCaseComputationTime(Integer.parseInt(task3WorstCase.getText()));
             task.setPeriod(Integer.parseInt(task3Period.getText()));
             task.setInvocation1(Integer.parseInt(task3Invocation1.getText()));
             task.setInvocation2(Integer.parseInt(task3Invocation2.getText()));*/
 
-            // For Testing Purposes
-            task.setWorstCaseComputationTime(1);
-            task.setPeriod(14);
-            task.setInvocation1(1);
-            task.setInvocation2(1);
-            task.setReleaseTime(0);
-            tasks.add(task);
+                // For Testing Purposes
+                task.setWorstCaseComputationTime(1);
+                task.setPeriod(14);
+                task.setInvocation1(1);
+                task.setInvocation2(1);
+                task.setReleaseTime(0);
+                tasks.add(task);
+            }
+        } catch (NumberFormatException e) {
+            throw new InvalidInputException("One or more enabled tasks contains an invalid integer or might not have been initialized.", e);
         }
-
-        // ToDo: Add logic for a 3rd task (or more depending on final decisions)
 
         return tasks;
     }
