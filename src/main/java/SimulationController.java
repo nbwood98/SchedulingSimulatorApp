@@ -8,106 +8,12 @@ import org.jfree.data.xy.XYDataset;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SimulationController {
 
     private static final String CHART_TITLE = "Simulation Output";
 
     public SimulationController() {
-
-    }
-
-    public void simulate2(ArrayList<Task> tasks) throws TaskNotSchedulableException {
-        // ToDo: Need logic to setup ordering of tasks based on EDF
-        // ToDo: Refactoring to accommodate release times (will need to be evaluated at every task)
-
-        ArrayList<Task> EDFSortedTasks = TaskUtils.getEDFOrderedTasks(tasks);
-        TaskUtils.setPeriodsForTasks(EDFSortedTasks);
-        Map<Integer, Integer> taskNumbertoOrderMap = TaskUtils.getEDFToInputTaskMapping(EDFSortedTasks, tasks);
-
-        Task task1 = EDFSortedTasks.get(0);
-        Task task2 = EDFSortedTasks.get(1);
-        Task task3 = EDFSortedTasks.get(2);
-
-        /*
-         * Invocation 1
-         */
-        double currentTime = 0;
-        ArrayList<Double> utilizations = new ArrayList<>();
-
-        // Task 1
-        double utilization = TaskUtils.calculateUtilization(task1.getWorstCaseComputationTime(),
-                task2.getWorstCaseComputationTime(),
-                task3.getWorstCaseComputationTime(),
-                false);
-        currentTime += task1.getInvocation1() / utilization;
-        utilizations.add(utilization);
-        System.out.println("Utilization for Task 1: " + utilization);
-        System.out.println("Current Time After Task 1: " + currentTime);
-
-        // Task 2
-        utilization = TaskUtils.calculateUtilization(task1.getInvocation1(),
-                task2.getWorstCaseComputationTime(),
-                task3.getWorstCaseComputationTime(),
-                false);
-        currentTime += task2.getInvocation1() / utilization;
-        utilizations.add(utilization);
-        System.out.println("Utilization for Task 2: " + utilization);
-        System.out.println("Current Time After Task 2: " + currentTime);
-
-        // Task 3
-        utilization = TaskUtils.calculateUtilization(task1.getInvocation1(),
-                task2.getInvocation1(),
-                task3.getWorstCaseComputationTime(),
-                false);
-        currentTime += task3.getInvocation1() / utilization;
-        utilizations.add(utilization);
-        System.out.println("Utilization for Task 3: " + utilization);
-        System.out.println("Current Time After Task 3: " + currentTime);
-
-        if (currentTime < (task1.getPeriod() + task1.getReleaseTime())) {
-            currentTime = task1.getPeriod() + task1.getReleaseTime();
-        }
-
-        /*
-         * Invocation 2
-         */
-
-        // ToDo: Finish implementing these numbers properly
-
-        // Task 1
-        utilization = TaskUtils.calculateUtilization(task1.getInvocation1(),
-                task2.getWorstCaseComputationTime(),
-                task3.getWorstCaseComputationTime(),
-                false);
-        currentTime += task2.getInvocation1() / utilization;
-        utilizations.add(utilization);
-        System.out.println("Utilization for Task 1: " + utilization);
-        System.out.println("Current Time After Task 1: " + currentTime);
-
-        // Task 2
-        utilization = TaskUtils.calculateUtilization(task1.getInvocation1(),
-                task2.getInvocation1(),
-                task3.getWorstCaseComputationTime(),
-                false);
-        currentTime += task3.getInvocation1() / utilization;
-        utilizations.add(utilization);
-        System.out.println("Utilization for Task 2: " + utilization);
-        System.out.println("Current Time After Task 2: " + currentTime);
-
-        // Task 3
-        utilization = TaskUtils.calculateUtilization(task1.getInvocation1(),
-                task2.getInvocation1(),
-                task3.getWorstCaseComputationTime(),
-                false);
-        currentTime += task3.getInvocation1() / utilization;
-        utilizations.add(utilization);
-        System.out.println("Utilization for Task 3: " + utilization);
-        System.out.println("Current Time After Task 3: " + currentTime);
-
-
     }
 
     public void simulate(ArrayList<Task> tasks) throws TaskNotSchedulableException {
@@ -118,7 +24,6 @@ public class SimulationController {
         while (tasks.get(0).getExecutionCount() < 2
                 || tasks.get(1).getExecutionCount() < 2
                 || tasks.get(2).getExecutionCount() < 2) {
-            //TaskUtils.removeFullyExecutedTasks(tasks);
             boolean anyRunnable = false;
             for (Task task : tasks) {
                 if (task.isRunnable(currentTime)) {
