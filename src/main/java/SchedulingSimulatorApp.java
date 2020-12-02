@@ -136,9 +136,9 @@ public class SchedulingSimulatorApp extends JFrame {
                 // ToDo: Implement these setters with restrictions on the fields set properly
 
                 task.setWorstCaseComputationTime(Integer.parseInt(task1WorstCase.getText()));
-                task.setPeriod(Integer.parseInt(task1Period.getText()));
-                task.setInvocation1(Integer.parseInt(task1Invocation1.getText()));
-                task.setInvocation2(Integer.parseInt(task1Invocation2.getText()));
+                //task.setPeriod(Integer.parseInt(task1Period.getText()));
+                //task.setInvocation1(Integer.parseInt(task1Invocation1.getText()));
+                //task.setInvocation2(Integer.parseInt(task1Invocation2.getText()));
 
                 // For Testing Purposes
                 task.setWorstCaseComputationTime(3);

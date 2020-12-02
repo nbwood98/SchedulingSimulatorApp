@@ -99,4 +99,18 @@ public class TaskUtils {
         return map;
     }
 
+    public static double getNextTimeWithExecutableTasks(ArrayList<Task> tasks, double currentTime) {
+        double lowestPeriod = Double.MAX_VALUE;
+        for (Task task : tasks) {
+            if (task.getPeriod() < lowestPeriod) {
+                lowestPeriod = task.getPeriod() * task.getExecutionCount();
+            }
+        }
+        return lowestPeriod;
+    }
+
+    public static void removeFullyExecutedTasks(ArrayList<Task> tasks) {
+        tasks.removeIf(task -> task.getExecutionCount() >= 2);
+    }
+
 }

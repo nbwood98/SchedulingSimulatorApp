@@ -114,39 +114,50 @@ public class SimulationController {
         TaskUtils.setWithRounding(false);
         double currentTime = 0;
         ArrayList<Double> utilizations = new ArrayList<>();
-        while (true) {
-            Task executingTask = tasks.get(0);
-            // Current time
-            // Next deadline of all tasks in the queue (initial release + n * period)
-            // Execute the minimum of next deadline - current time
+
+        while (tasks.get(0).getExecutionCount() < 2
+                || tasks.get(1).getExecutionCount() < 2
+                || tasks.get(2).getExecutionCount() < 2) {
+            //TaskUtils.removeFullyExecutedTasks(tasks);
+            boolean anyRunnable = false;
             for (Task task : tasks) {
-                if ((1 + task.getExecutionCount()) * task.getPeriod() + task.getReleaseTime() <
-                        (1 + executingTask.getExecutionCount()) * executingTask.getPeriod() + executingTask.getReleaseTime()) {
-                    executingTask = task;
+                if (task.isRunnable(currentTime)) {
+                    anyRunnable = true;
                 }
             }
+            if (anyRunnable) {
+                Task executingTask = Task.getMaxTask();
+                // Current time
+                // Next deadline of all tasks in the queue (initial release + n * period)
+                // Execute the minimum of next deadline - current time
+                for (Task task : tasks) {
+                    if ((1 + task.getExecutionCount()) * task.getPeriod() + task.getReleaseTime() <
+                            (1 + executingTask.getExecutionCount()) * executingTask.getPeriod() + executingTask.getReleaseTime()) {
+                        if (task.getExecutionCount() < 2) {
+                            executingTask = task;
+                        }
+                    }
+                }
 
-            double utilization = TaskUtils.calculateUtilization(tasks, executingTask);
-            executingTask.incrementExecutionCount();
+                double utilization = TaskUtils.calculateUtilization(tasks, executingTask);
+                executingTask.incrementExecutionCount();
 
-            utilizations.add(utilization);
+                utilizations.add(utilization);
 
-            //currentTime += executingTask.
-
-            System.out.println("Executing Task: " + executingTask.getTaskNumber());
-            System.out.println("Execution Count For Task: " + executingTask.getExecutionCount());
-            System.out.println("Utilization: " + utilization);
+                currentTime += executingTask.getExecutionTime(utilization);
+                System.out.println("Executing Task: " + executingTask.getTaskNumber());
+                System.out.println("Execution Count For Task: " + executingTask.getExecutionCount());
+                System.out.println("Utilization: " + utilization);
+            } else {
+                currentTime = TaskUtils.getNextTimeWithExecutableTasks(tasks, currentTime);
+                System.out.println("System Idle, Finished at: " + currentTime);
+            }
+            System.out.println("Current Time: " + currentTime);
+            System.out.println("----------------------------------------------------");
             // Now say we know the next task to be executed.
             // Whether the other tasks have been run in this invocation
 
             // Task has run
-
-            if (tasks.get(0).getExecutionCount() >= 2
-                    && tasks.get(1).getExecutionCount() >= 2
-                    && tasks.get(2).getExecutionCount() >= 2) {
-                break;
-            }
-
         }
         showChart(getChart());
     }

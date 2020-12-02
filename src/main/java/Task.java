@@ -9,7 +9,6 @@ public class Task implements Serializable {
     private int invocation1;
     private int invocation2;
     private int releaseTime;
-
     private int executionCount;
 
     public Task(int taskNumber) {
@@ -73,6 +72,47 @@ public class Task implements Serializable {
         executionCount++;
     }
 
+    public double getExecutionTime(double utilization) {
+        if (executionCount == 0) {
+            System.out.println("Error, task executionCount should not be zero here.");
+            return this.getWorstCaseComputationTime() / utilization;
+        } else if (executionCount == 1) {
+            return this.getInvocation1() / utilization;
+        } else if (executionCount == 2) {
+            return this.getInvocation2() / utilization;
+        } else {
+            System.out.println("Error, task executionCount should never be higher than 2");
+            return 0;
+        }
+    }
+
+    // ToDo: This does not factor in release time for now. It could be modified to accomodate release time.
+
+    public boolean isRunnable(double currentTime) {
+        if (executionCount >= 2) {
+            return false;
+        }
+        return currentTime >= this.getPeriod() * executionCount;
+    }
+
     // ToDo: Implement equals and hash code methods if they are required for equality
     //  checks (probably not)
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    public static Task getMaxTask() {
+        Task task = new Task(100);
+        task.setExecutionCount(10000000);
+        task.setPeriod(1000000);
+        task.setReleaseTime(100000000);
+        return task;
+    }
 }
