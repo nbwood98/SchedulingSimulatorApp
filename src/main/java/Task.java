@@ -11,7 +11,7 @@ public class Task implements Serializable {
     private int releaseTime;
     private int executionCount;
 
-    private double[][] pointBuffer;
+    private final double[][] pointBuffer;
     private int pointCount = 0;
 
     public Task(int taskNumber) {
@@ -91,8 +91,6 @@ public class Task implements Serializable {
         }
     }
 
-    // ToDo: This does not factor in release time for now. It could be modified to accomodate release time.
-
     public boolean isRunnable(double currentTime) {
         if (executionCount >= 2) {
             return false;
@@ -110,8 +108,13 @@ public class Task implements Serializable {
         return pointBuffer;
     }
 
-    // ToDo: Implement equals and hash code methods if they are required for equality
-    //  checks (probably not)
+    public static Task getMaxTask() {
+        Task task = new Task(100);
+        task.setExecutionCount(10000000);
+        task.setPeriod(1000000);
+        task.setReleaseTime(100000000);
+        return task;
+    }
 
     @Override
     public int hashCode() {
@@ -123,11 +126,4 @@ public class Task implements Serializable {
         return super.equals(obj);
     }
 
-    public static Task getMaxTask() {
-        Task task = new Task(100);
-        task.setExecutionCount(10000000);
-        task.setPeriod(1000000);
-        task.setReleaseTime(100000000);
-        return task;
-    }
 }

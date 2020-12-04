@@ -14,8 +14,6 @@ public class SchedulingSimulatorApp extends JFrame {
 
     private JPanel mainPanel;
     private JButton btnSimulate;
-    private JButton btnCheckSchedulability;
-    private JLabel label1;
 
     private JRadioButton task1Enable;
     private JTextField task1Period;
@@ -57,7 +55,6 @@ public class SchedulingSimulatorApp extends JFrame {
     }
 
     private void initComponents() {
-        // Set default state
         task1Enable.setSelected(true);
         task1Enable.setEnabled(false);
         task1ReleaseTime.setEnabled(false);
@@ -72,12 +69,7 @@ public class SchedulingSimulatorApp extends JFrame {
 
         populateTaskZeroes();
 
-        //Intended for action listener and other related initializations
-        task1Enable.addActionListener(this::taskEnable);
-        task2Enable.addActionListener(this::taskEnable);
-        task3Enable.addActionListener(this::taskEnable);
         btnSimulate.addActionListener(this::btnSimulateActionPerformed);
-        btnCheckSchedulability.addActionListener(this::btnCheckSchedulabilityActionPerformed);
     }
 
     private void populateTaskZeroes() {
@@ -99,39 +91,12 @@ public class SchedulingSimulatorApp extends JFrame {
         task3Invocation2.setText(ZERO_STRING);
     }
 
-    private void taskEnable(ActionEvent e) {
-        // Implement generic task enabling functionality
-        // make call to the check tasks method or move the logic here
-    }
-
     private void btnSimulateActionPerformed(ActionEvent e) {
         try {
             controller.simulate(setupAndGetEnabledTasks(), enableLimitedFrequency.isSelected());
+            MissedDeadlineWarnings.showWarnings(this);
         } catch (InvalidInputException | TaskNotSchedulableException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
-        }
-    }
-
-    private void btnCheckSchedulabilityActionPerformed(ActionEvent e) {
-        // ToDo: Implement functionality for validating schedulability
-    }
-
-    // ToDo: Address why this logic isn't working properly, however, this is low-priority.
-    private void checkEnabledTasks(int task) {
-        boolean enabled;
-        switch (task) {
-            case 1:
-                enabled = task1Enable.isEnabled();
-                task1Period.setEditable(enabled);
-                task1WorstCase.setEditable(enabled);
-                break;
-            case 2:
-                enabled = task2Enable.isEnabled();
-                task2Period.setEditable(enabled);
-                task2WorstCase.setEditable(enabled);
-                break;
-            default:
-                // do nothing for now
         }
     }
 
@@ -198,7 +163,6 @@ public class SchedulingSimulatorApp extends JFrame {
         } catch (NumberFormatException e) {
             throw new InvalidInputException("One or more enabled tasks contains an invalid integer/double or might not have been initialized.", e);
         }
-
         return tasks;
     }
 }
