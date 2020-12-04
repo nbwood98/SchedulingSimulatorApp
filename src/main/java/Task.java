@@ -4,23 +4,28 @@ public class Task implements Serializable {
 
     private final int taskNumber;
 
-    private int worstCaseComputationTime;
-    private int period;
-    private int invocation1;
-    private int invocation2;
+    private double worstCaseComputationTime;
+    private double period;
+    private double invocation1;
+    private double invocation2;
     private int releaseTime;
     private int executionCount;
+
+    private double[][] pointBuffer;
+    private int pointCount = 0;
 
     public Task(int taskNumber) {
         this.taskNumber = taskNumber;
         executionCount = 0;
+        pointBuffer = new double[2][9];
+        this.pushPoint(0, 0);
     }
 
     public int getTaskNumber() {
         return taskNumber;
     }
 
-    public void setWorstCaseComputationTime(int worstCaseComputationTime) {
+    public void setWorstCaseComputationTime(double worstCaseComputationTime) {
         this.worstCaseComputationTime = worstCaseComputationTime;
     }
 
@@ -28,7 +33,7 @@ public class Task implements Serializable {
         return worstCaseComputationTime;
     }
 
-    public void setPeriod(int period) {
+    public void setPeriod(double period) {
         this.period = period;
     }
 
@@ -36,19 +41,19 @@ public class Task implements Serializable {
         return period;
     }
 
-    public void setInvocation1(int invocation1) {
+    public void setInvocation1(double invocation1) {
         this.invocation1 = invocation1;
     }
 
-    public int getInvocation1() {
+    public double getInvocation1() {
         return invocation1;
     }
 
-    public void setInvocation2(int invocation2) {
+    public void setInvocation2(double invocation2) {
         this.invocation2 = invocation2;
     }
 
-    public int getInvocation2() {
+    public double getInvocation2() {
         return invocation2;
     }
 
@@ -93,6 +98,16 @@ public class Task implements Serializable {
             return false;
         }
         return currentTime >= this.getPeriod() * executionCount;
+    }
+
+    public void pushPoint(double x, double y) {
+        pointBuffer[0][pointCount] = x;
+        pointBuffer[1][pointCount] = y;
+        pointCount++;
+    }
+
+    public double[][] getPointBuffer() {
+        return pointBuffer;
     }
 
     // ToDo: Implement equals and hash code methods if they are required for equality
