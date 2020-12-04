@@ -16,15 +16,16 @@ public class SimulationController {
     public SimulationController() {
     }
 
-    // ToDo: Push error buffer for missed deadlines
-
     public void simulate(ArrayList<Task> tasks, boolean roundingEnabled) throws TaskNotSchedulableException {
+        MissedDeadlineWarnings.clearWarnings();
         TaskUtils.setWithRounding(roundingEnabled);
+
         double currentTime = 0;
 
         while (tasks.get(0).getExecutionCount() < 2
                 || tasks.get(1).getExecutionCount() < 2
                 || tasks.get(2).getExecutionCount() < 2) {
+
             boolean anyRunnable = false;
             for (Task task : tasks) {
                 if (task.isRunnable(currentTime)) {
@@ -41,15 +42,21 @@ public class SimulationController {
                         }
                     }
                 }
-                executingTask.pushPoint(currentTime, 0);
+
                 double utilization = TaskUtils.calculateUtilization(tasks, executingTask);
+                executingTask.pushPoint(currentTime, 0);
                 executingTask.pushPoint(currentTime, utilization);
 
                 executingTask.incrementExecutionCount();
-
                 currentTime += executingTask.getExecutionTime(utilization);
+
                 executingTask.pushPoint(currentTime, utilization);
                 executingTask.pushPoint(currentTime, 0);
+
+                if (currentTime > executingTask.getPeriod() * executingTask.getExecutionCount()) {
+                    MissedDeadlineWarnings.addWarning(executingTask.getTaskNumber(),
+                            executingTask.getPeriod() * executingTask.getExecutionCount());
+                }
             } else {
                 currentTime = TaskUtils.getNextTimeWithExecutableTasks(tasks, currentTime);
             }
@@ -68,7 +75,6 @@ public class SimulationController {
     }
 
     private JFreeChart getChart(ArrayList<Task> tasks) {
-
         XYDataset ds = createDataset(tasks);
         return ChartFactory.createXYLineChart("Task Simulation Output Graph", "Time", "Frequency", ds,
                 PlotOrientation.VERTICAL, true, true, false);
