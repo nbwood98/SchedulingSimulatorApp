@@ -57,15 +57,15 @@ public class SchedulingSimulatorApp extends JFrame {
     private void initComponents() {
         task1Enable.setSelected(true);
         task1Enable.setEnabled(false);
-        task1ReleaseTime.setEnabled(false);
+        //task1ReleaseTime.setEnabled(false);
 
         task2Enable.setSelected(true);
         task2Enable.setEnabled(false);
-        task2ReleaseTime.setEnabled(false);
+        //task2ReleaseTime.setEnabled(false);
 
         task3Enable.setSelected(true);
         task3Enable.setEnabled(false);
-        task3ReleaseTime.setEnabled(false);
+        //task3ReleaseTime.setEnabled(false);
 
         populateTaskZeroes();
 
@@ -113,13 +113,14 @@ public class SchedulingSimulatorApp extends JFrame {
                     task.setPeriod(Double.parseDouble(task1Period.getText()));
                     task.setInvocation1(Double.parseDouble(task1Invocation1.getText()));
                     task.setInvocation2(Double.parseDouble(task1Invocation2.getText()));
+                    task.setReleaseTime(Double.parseDouble(task1ReleaseTime.getText()));
                 } else {
                     task.setWorstCaseComputationTime(3);
                     task.setPeriod(8);
                     task.setInvocation1(2);
                     task.setInvocation2(1);
+                    task.setReleaseTime(0);
                 }
-                task.setReleaseTime(0);
                 tasks.add(task);
             }
 
@@ -132,13 +133,14 @@ public class SchedulingSimulatorApp extends JFrame {
                     task.setPeriod(Double.parseDouble(task2Period.getText()));
                     task.setInvocation1(Double.parseDouble(task2Invocation1.getText()));
                     task.setInvocation2(Double.parseDouble(task2Invocation2.getText()));
+                    task.setReleaseTime(Double.parseDouble(task2ReleaseTime.getText()));
                 } else {
                     task.setWorstCaseComputationTime(3);
                     task.setPeriod(10);
                     task.setInvocation1(1);
                     task.setInvocation2(1);
+                    task.setReleaseTime(0);
                 }
-                task.setReleaseTime(0);
                 tasks.add(task);
             }
 
@@ -151,13 +153,14 @@ public class SchedulingSimulatorApp extends JFrame {
                     task.setPeriod(Double.parseDouble(task3Period.getText()));
                     task.setInvocation1(Double.parseDouble(task3Invocation1.getText()));
                     task.setInvocation2(Double.parseDouble(task3Invocation2.getText()));
+                    task.setReleaseTime(Double.parseDouble(task3ReleaseTime.getText()));
                 } else {
                     task.setWorstCaseComputationTime(1);
                     task.setPeriod(14);
                     task.setInvocation1(1);
                     task.setInvocation2(1);
+                    task.setReleaseTime(0);
                 }
-                task.setReleaseTime(0);
                 tasks.add(task);
             }
         } catch (NumberFormatException e) {

@@ -8,7 +8,7 @@ public class Task implements Serializable {
     private double period;
     private double invocation1;
     private double invocation2;
-    private int releaseTime;
+    private double releaseTime;
     private int executionCount;
 
     private final double[][] pointBuffer;
@@ -57,11 +57,11 @@ public class Task implements Serializable {
         return invocation2;
     }
 
-    public void setReleaseTime(int releaseTime) {
+    public void setReleaseTime(double releaseTime) {
         this.releaseTime = releaseTime;
     }
 
-    public int getReleaseTime() {
+    public double getReleaseTime() {
         return releaseTime;
     }
 
